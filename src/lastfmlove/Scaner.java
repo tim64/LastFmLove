@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.farng.mp3.MP3File;
-import org.farng.mp3.TagException;
-import org.farng.mp3.id3.*;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.mp3.MP3AudioHeader;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
 
 /**
  *
@@ -22,13 +24,11 @@ public class Scaner {
     
     public void scan_root(String root_dir, ArrayList<Song> song_list) throws IOException, Exception {
         FileFinder f = new FileFinder();
-        List dirs, paths = null;
-        //ArrayList <String> paths = new ArrayList<>();
+        List dirs;
         String input;
         Pattern pattern;
         Matcher matcher;
         dirs = f.findDirectories(root_dir);
-        //System.out.println(song_list);
         for (int s = 0; s < song_list.size(); s++)
         {
             pattern = Pattern.compile(song_list.get(s).artist);
@@ -43,27 +43,23 @@ public class Scaner {
                         }
                     }
                  }
-
-
-         
-        }
-        
+        }   
     }
     
-    public void folder_path_creator(String root_dir, ArrayList<Song> song_list, int ind) throws IOException, TagException {
-        List paths = null;
-        ArrayList <String> result = new ArrayList<>();
+    public void folder_path_creator(String root_dir, ArrayList<Song> song_list, int ind) throws IOException {
+        int count = 0;
+        List paths;
+        MP3File mp3_file;
         FileFinder f = new FileFinder();
             try {
                 paths = f.findFiles(root_dir, song_list.get(ind).title);
                 for (int i = 0; i < paths.size(); i++)
                 {
-                    File source_file = new File(paths.get(i).toString());
-                    MP3File mp3_file = new MP3File(source_file);
-                    //System.out.println("file = " + mp3_file.getID3v1Tag().getTitle()); 
-                    if (mp3_file.getID3v1Tag().getTitle().equals(song_list.get(ind).title))
+                    File source_file = new File(paths.get(i).toString());                 
+                    mp3_file = (MP3File)AudioFileIO.read(source_file);
+                    if (mp3_file.getID3v1Tag().getFirstTitle().equals(song_list.get(ind).title))
                     {
-                        //System.out.println("Path add = " + paths.get(i).toString());
+                        count++;
                         Song tmp = song_list.get(ind);
                         tmp.set_path(paths.get(i).toString());
                         song_list.set(ind, tmp);
@@ -71,8 +67,7 @@ public class Scaner {
                 }
             }
             catch (Exception e) {
-                //System.out.println(e.getMessage());
+                //System.out.println("no read "+song_list.get(ind).title);
         }
-    }
-    
+    } 
 }
