@@ -63,7 +63,6 @@ public class Downloader {
      father=nodes.item(i).getParentNode().getNodeName();
      grandfather=nodes.item(i).getParentNode().getParentNode().getNodeName();
      txt=nodes.item(i).getNodeValue();
-     //???????
      back_idx = song_list.size() - 1;
      if ("name".equals(father) && "artist".equals(grandfather))
      {

@@ -11,11 +11,13 @@ package lastfmlove;
 public class Song {
     public String title = "";
     public String artist = "";
+    public String path = "";
     
-    Song (String t, String a)
+    Song (String t, String a, String p)
     {
         title = t;
         artist = a;
+        path = p;
     }
 
     Song() {
@@ -38,6 +40,15 @@ public class Song {
     public void set_artist(String artist_) 
     {
         artist = artist_;
+    }
+    
+     public String get_path() 
+    {
+        return path;
+    }
+    public void set_path(String path_) 
+    {
+        path = path_;
     }
           
 }

@@ -39,39 +39,40 @@ public class Scaner {
                         input = dirs.get(d).toString();
                         matcher = pattern.matcher(input); 
                         if (matcher.find()) {
-                            paths = folder_path_creator(input, song_list.get(s).title);
+                            folder_path_creator(input, song_list, s);
                         }
                     }
                  }
-                 System.out.println(paths);
+
 
          
         }
         
     }
     
-    public List folder_path_creator(String root_dir, String title) throws IOException, TagException {
+    public void folder_path_creator(String root_dir, ArrayList<Song> song_list, int ind) throws IOException, TagException {
         List paths = null;
         ArrayList <String> result = new ArrayList<>();
         FileFinder f = new FileFinder();
             try {
-                paths = f.findFiles(root_dir,title);
+                paths = f.findFiles(root_dir, song_list.get(ind).title);
                 for (int i = 0; i < paths.size(); i++)
                 {
                     File source_file = new File(paths.get(i).toString());
                     MP3File mp3_file = new MP3File(source_file);
                     //System.out.println("file = " + mp3_file.getID3v1Tag().getTitle()); 
-                    if (mp3_file.getID3v1Tag().getTitle().equals(title))
+                    if (mp3_file.getID3v1Tag().getTitle().equals(song_list.get(ind).title))
                     {
-                        result.add(paths.get(i).toString());
+                        //System.out.println("Path add = " + paths.get(i).toString());
+                        Song tmp = song_list.get(ind);
+                        tmp.set_path(paths.get(i).toString());
+                        song_list.set(ind, tmp);
                     }
                 }
             }
             catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
         }
-    
-    return result;
     }
     
 }

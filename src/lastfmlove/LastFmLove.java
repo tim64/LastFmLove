@@ -16,16 +16,19 @@ class LastFmLove {
     
     public static void main (String[] args) throws IOException, TagException, Exception
     {
-        ArrayList<Song> song_list = new ArrayList<>();
+        ArrayList<Song> song_list;
         Downloader d = new Downloader();
         Scaner s = new Scaner();
-        String url = d.get_request("tim32", "100");
+        String url = d.get_request("tim32", "20");
         song_list = d.read_xml(url); 
-        System.out.println(song_list);
         s.scan_root("D:\\Music", song_list);
+        for (int i  = 0; i < song_list.size(); i++)
+        {
+            System.out.println(song_list.get(i).path);
+        }
         
     }
 }
 
 
- 
+//Scaner добавляет одинаковые файлы
