@@ -4,6 +4,8 @@
  */
 package lastfmlove;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Тим
@@ -12,12 +14,25 @@ public class Song {
     public String title = "";
     public String artist = "";
     public String path = "";
+    public ArrayList<String> album_list = new ArrayList<>();
+    public String url = "";
+    public int length = 0;
     
     Song (String t, String a, String p)
     {
         title = t;
         artist = a;
         path = p;
+    }
+    
+     Song (String t, String a, String p, ArrayList<String> al, String u, int l)
+    {
+        title = t;
+        artist = a;
+        path = p;
+        album_list = al;
+        url = u;
+        length = l;
     }
 
     Song() {
@@ -49,6 +64,33 @@ public class Song {
     public void set_path(String path_) 
     {
         path = path_;
+    }
+    
+    public ArrayList<String> get_album_list() 
+    {
+        return album_list;
+    }
+    public void set_album(ArrayList<String> album_list_) 
+    {
+        album_list = album_list_;
+    }
+    
+    public String get_url() 
+    {
+        return url;
+    }
+    public void set_len(String url_) 
+    {
+        path = url_;
+    }
+    
+    public int get_length() 
+    {
+        return length;
+    }
+    public void set_length(int len_) 
+    {
+        length = len_;
     }
           
 }
