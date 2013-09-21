@@ -79,9 +79,9 @@ public class Song {
     {
         return url;
     }
-    public void set_len(String url_) 
+    public void set_len(int len_) 
     {
-        path = url_;
+        length = len_;
     }
     
     public int get_length() 
