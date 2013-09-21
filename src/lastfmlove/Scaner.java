@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
@@ -25,21 +23,14 @@ public class Scaner {
         FileFinder f = new FileFinder();
         List dirs;
         String path, input;
-        Pattern pattern;
-        Matcher matcher;
         dirs = f.findDirectories(root_dir);
         for (int s = 0; s < song_list.size(); s++)
         {
             String artist = song_list.get(s).artist.toLowerCase().replace(" ", "");
-            //pattern = Pattern.compile(song_list.get(s).artist);
-                 //if (!pattern.pattern().isEmpty())
-                 //{
                     for (int d = 0; d < dirs.size(); d++)
                     {
                         path = dirs.get(d).toString();
                         input = dirs.get(d).toString().toLowerCase().replace(" ", "");
-                        //matcher = pattern.matcher(input); 
-                        //if (matcher.) {
                         if (input.indexOf(artist) > -1) {
                             folder_path_creator(path, song_list, s);
                         }
@@ -79,6 +70,8 @@ public class Scaner {
         int dotPos = filename.lastIndexOf(".") + 1;
         return filename.substring(dotPos);
     }
+    
+
     
 
 }

@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package lastfmlove;
-import java.net.URL;
 import java.io.IOException;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilder;

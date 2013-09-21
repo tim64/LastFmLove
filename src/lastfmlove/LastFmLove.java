@@ -22,7 +22,7 @@ class LastFmLove {
         String url = d.get_request("tim32", "3000");
         song_list = d.read_xml(url); 
         s.scan_root("D:\\Music", song_list);
-        p.create(song_list);
+        p.create(song_list,"m3u");
         
     }
 }
