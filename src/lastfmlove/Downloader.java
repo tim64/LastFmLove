@@ -1,49 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package lastfmlove;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import org.w3c.dom.*;
-
-/**
- *
- * @author Тим
- */
 public class Downloader {
     public String user_name = "";
-    public int limit = 0;
+    public int limit = Integer.valueOf(0);
     private ArrayList<Song> song_list = new ArrayList<>();
     
     
-    public String get_request_track(String user_name, String limit)
-    {
+    public String get_request_track(String user_name, String limit) {
         String url_path = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + user_name + "&limit=" + limit + "&api_key=acb7e0b5d3b7084c491d8720340e43d5";
         return url_path;
     }
     
-    public String get_request_album(String artist, String title)
-    {
-                String url_path = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=acb7e0b5d3b7084c491d8720340e43d5&artist=" + artist + "&track=" + title;
-                return url_path;
-
-        
+    public String get_request_album(String artist, String title) {
+        String url_path = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=acb7e0b5d3b7084c491d8720340e43d5&artist=" + artist + "&track=" + title;
+        return url_path;   
     }
     
-    public ArrayList<Song> read_tracks(String urlPath)
-    {  
-        Song s = new Song();
+    public ArrayList<Song> read_tracks(String urlPath) {  
         try {
-            System.out.println(urlPath);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(urlPath);
@@ -67,8 +47,8 @@ public class Downloader {
         Document doc;
         try {
             doc = builder.parse(url_path);
-        } catch (IOException ex) {
-            //Logger.getLogger(Downloader.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (IOException ex) {
             return "albumnotfound!!!!";
         }
         NodeList nl = doc.getElementsByTagName("title");
@@ -89,45 +69,38 @@ public class Downloader {
             al = get_info(tmp);
             tmp.set_album(al);
             song_list.set(i, tmp);
-            if (!tmp.get_album().equals("albumnotfound!!!!"))
-                System.out.println("Album "+tmp.get_album()+" found!");
         }
     }
         
-   public void create_song_list(Node node, int level) {
-    NodeList nodes = node.getChildNodes();  
-    int back_idx = song_list.size() - 1;
-     if (song_list.isEmpty() || (!song_list.get(back_idx).artist.isEmpty() && !song_list.get(back_idx).title.isEmpty()))
-     {
-         Song s = new Song();
-         song_list.add(s);
-     }
-   
-    String txt, grandfather, father;
-    for(int i=0, nodes_len=nodes.getLength(); i<nodes_len; i++) {   
-    if (nodes.item(i).getNodeType()==Node.TEXT_NODE) { 
-     
-     father=nodes.item(i).getParentNode().getNodeName();
-     grandfather=nodes.item(i).getParentNode().getParentNode().getNodeName();
-     txt=nodes.item(i).getNodeValue();
-     back_idx = song_list.size() - 1;
-     if ("name".equals(father) && "artist".equals(grandfather))
-     {
-         Song tmp = song_list.get(back_idx);
-         tmp.set_artist(txt);
-         song_list.set(back_idx, tmp);
-     }
-     if ("name".equals(father) && "track".equals(grandfather))
-     {
-         Song tmp = song_list.get(back_idx);
-         tmp.set_title(txt);
-         song_list.set(back_idx, tmp);
-     }
-    } 
-    create_song_list(nodes.item(i), level+1);
-    }
+    public void create_song_list(Node node, int level) {
+        NodeList nodes = node.getChildNodes();  
+        String txt, grandfather, father;
+        int back_idx = song_list.size() - 1;
+        if (song_list.isEmpty() || (!song_list.get(back_idx).artist.isEmpty() && !song_list.get(back_idx).title.isEmpty())) {
+           Song s = new Song();
+           song_list.add(s);
+        }
+        for(int i=0, nodes_len=nodes.getLength(); i<nodes_len; i++) {   
+        if (nodes.item(i).getNodeType()==Node.TEXT_NODE) { 
+            father=nodes.item(i).getParentNode().getNodeName();
+            grandfather=nodes.item(i).getParentNode().getParentNode().getNodeName();
+            txt=nodes.item(i).getNodeValue(); 
+            back_idx = song_list.size() - 1;
+            if ("name".equals(father) && "artist".equals(grandfather)) {
+                Song tmp = song_list.get(back_idx);
+                tmp.set_artist(txt);
+                song_list.set(back_idx, tmp);
+            }
+            if ("name".equals(father) && "track".equals(grandfather)) {
+                Song tmp = song_list.get(back_idx);
+                tmp.set_title(txt);
+                song_list.set(back_idx, tmp);
+            }
+        } 
+        create_song_list(nodes.item(i), level+1);
+        }
    }
-   }
+}
 
      
     

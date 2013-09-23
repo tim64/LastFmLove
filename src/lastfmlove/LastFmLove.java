@@ -1,42 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package lastfmlove;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
-/**
- *
- * @author Тим
- */
+import java.util.Scanner;
 class LastFmLove {
     
     public static void main (String[] args) throws IOException, Exception
     {
-        final String default_root = "D:\\Music";
-        final String default_list = "lastfmlove.m3u";
-        final String default_type = "m3u";
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter user name: ");
+        String user = scan.nextLine();
+        System.out.print("Enter root folder with music: ");
+        String root = scan.nextLine();
+        System.out.print("Enter limit playlist: ");
+        String limit = scan.nextLine();
+        
         ArrayList<Song> song_list;
         Downloader d = new Downloader();
         Scaner s = new Scaner();
         PlaylistCreator p = new PlaylistCreator();
-        System.out.println("Start!");
-        String url = d.get_request_track("tim32", "0");
+        String url = d.get_request_track(user, limit);
         song_list = d.read_tracks(url);
-        System.out.println("Song list created! Size = "+song_list.size());
         d.add_albums(song_list);
-        System.out.println("Albums added");
-        s.scan_root(default_root, song_list);
-        System.out.println("Paths added");
-        p.create(song_list,default_type);
-        System.out.println("Playlist created");
-        System.out.println("Finish!");
-        
+        s.scan_root(root, song_list);
+        p.create(song_list); 
     }
 }
-
-//Добавить проверку существующего плейлиста
-//Решить поиск саундтреков
-//Улучшить поиск по папкам
