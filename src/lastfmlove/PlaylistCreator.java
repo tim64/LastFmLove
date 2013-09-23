@@ -17,40 +17,46 @@ public class PlaylistCreator {
     
     public void create(ArrayList<Song> song_list, String type) throws FileNotFoundException { 
          int n = 0;
-         if (type.equals("pls"))
-         {
-            PrintWriter pls;
-            pls = new PrintWriter(new FileOutputStream("lastfmlove.pls"));
-            pls.println("[playlist]");
-            for (int i = 0; i < song_list.size(); i++)
+         switch(type) {
+            case "pls":
             {
-                if (!song_list.get(i).path.isEmpty() && song_list.get(i).length != 0)
-                {
-                   n++;
-                   pls.println("File"+n+"="+song_list.get(i).path);
-                   pls.println("Length"+n+"="+song_list.get(i).length);
-                }
+               PrintWriter pls;
+               pls = new PrintWriter(new FileOutputStream("lastfmlove.pls"));
+               pls.println("[playlist]");
+               for (int i = 0; i < song_list.size(); i++)
+               {
+                   if (!song_list.get(i).path.isEmpty() && song_list.get(i).length != 0)
+                   {
+                      n++;
+                      pls.println("File"+n+"="+song_list.get(i).path);
+                      pls.println("Length"+n+"="+song_list.get(i).length);
+                   }
+               }
+               pls.println("NumberOfEntries="+n);
+               pls.println("Version=2");  
+               pls.close();
+               break;
             }
-            pls.println("NumberOfEntries="+n);
-            pls.println("Version=2");  
-            pls.close();
-         }
          
-         if (type.equals("m3u"))
-         {
-            PrintWriter m3u;
-            m3u = new PrintWriter(new FileOutputStream("lastfmlove.m3u"));
-            m3u.println("#EXTM3U");
-            for (int i = 0; i < song_list.size(); i++)
+            case "m3u":
             {
-                if (!song_list.get(i).path.isEmpty() && song_list.get(i).length != 0)
+                PrintWriter m3u;
+                m3u = new PrintWriter(new FileOutputStream("lastfmlove.m3u"));
+                m3u.println("#EXTM3U");
+                for (int i = 0; i < song_list.size(); i++)
                 {
-                   n++;
-                   m3u.println("#EXTINF:"+song_list.get(i).length+","+song_list.get(i).artist+" - "+song_list.get(i).title);
-                   m3u.println(song_list.get(i).path);
+                    if (!song_list.get(i).path.isEmpty() && song_list.get(i).length != 0)
+                    {
+                       n++;
+                       m3u.println("#EXTINF:"+song_list.get(i).length+","+song_list.get(i).artist+" - "+song_list.get(i).title);
+                       m3u.println(song_list.get(i).path);
+                       System.out.println(song_list.get(i).artist+" - "+song_list.get(i).title+" found!");
+                    }
                 }
+                System.out.println(n + " song found");
+                m3u.close();
+                break;
             }
-            m3u.close();
          }
         
     }

@@ -20,23 +20,43 @@ import org.jaudiotagger.audio.AudioFile;
 public class Scaner {
     
     public void scan_root(String root_dir, ArrayList<Song> song_list) throws IOException, Exception {
+        String artist = "";
+        String album = "";
         FileFinder f = new FileFinder();
         List dirs;
         String path, input;
         dirs = f.findDirectories(root_dir);
         for (int s = 0; s < song_list.size(); s++)
         {
-            String artist = song_list.get(s).artist.toLowerCase().replace(" ", "");
+            artist = song_list.get(s).get_artist().toLowerCase().replace(" ", "").replace("_","");
+            album = song_list.get(s).get_album().toLowerCase().replace(" ", "").replace("_","");
+            if (!"albumnotfound!!!!".equals(album)) 
+            {
+
+
                     for (int d = 0; d < dirs.size(); d++)
                     {
-                        path = dirs.get(d).toString();
-                        input = dirs.get(d).toString().toLowerCase().replace(" ", "");
-                        if (input.indexOf(artist) > -1) {
+                       path = dirs.get(d).toString();
+                       input = dirs.get(d).toString().toLowerCase().replace(" ", "");
+                       if ((input.indexOf(album) > -1) && (input.indexOf(artist) > -1)) {
+                            System.out.println("Path found with album:"+path);
                             folder_path_creator(path, song_list, s);
-                        }
-                    }
-                 //}
-        }   
+                       }
+                     }   
+            }
+           else  {
+                for (int d = 0; d < dirs.size(); d++)
+                    {
+
+                       path = dirs.get(d).toString();
+                       input = dirs.get(d).toString().toLowerCase().replace(" ", "");
+                       if (input.indexOf(artist) > -1) {
+                           System.out.println("Path found with artist:"+path);
+                           folder_path_creator(path, song_list, s);
+                       }
+                     }  
+                }
+           }
     }
     
     public void folder_path_creator(String root_dir, ArrayList<Song> song_list, int ind) throws IOException {
@@ -54,7 +74,6 @@ public class Scaner {
                     AudioHeader head = af.getAudioHeader();
                     if (tag.getFirst(FieldKey.TITLE).equals(song_list.get(ind).title))
                             {
-                                
                                 Song tmp = song_list.get(ind);
                                 tmp.set_len(head.getTrackLength());
                                 tmp.set_path(paths.get(i).toString());
@@ -69,6 +88,10 @@ public class Scaner {
     public static String getFileExtention(String filename){
         int dotPos = filename.lastIndexOf(".") + 1;
         return filename.substring(dotPos);
+    }
+    
+    public void path_from_data(String playlist_path) {
+        
     }
     
 

@@ -14,7 +14,7 @@ public class Song {
     public String title = "";
     public String artist = "";
     public String path = "";
-    public ArrayList<String> album_list = new ArrayList<>();
+    public String album = "";
     public String url = "";
     public int length = 0;
     
@@ -25,12 +25,12 @@ public class Song {
         path = p;
     }
     
-     Song (String t, String a, String p, ArrayList<String> al, String u, int l)
+     Song (String t, String a, String p, String al, String u, int l)
     {
         title = t;
         artist = a;
         path = p;
-        album_list = al;
+        album  = al;
         url = u;
         length = l;
     }
@@ -66,13 +66,13 @@ public class Song {
         path = path_;
     }
     
-    public ArrayList<String> get_album_list() 
+    public String get_album() 
     {
-        return album_list;
+        return album;
     }
-    public void set_album(ArrayList<String> album_list_) 
+    public void set_album(String album_) 
     {
-        album_list = album_list_;
+        album = album_;
     }
     
     public String get_url() 
