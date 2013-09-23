@@ -16,6 +16,9 @@ Last FM love tracks to M3U playlist
 
 Пример работы:
 
+Вводм имя пользователя, папку где у нас вся музыка и ограничение размера плейлиста. Если введете 0, 
+то плейлист будет учитывать ВСЕ ваши любимые треки.
+
 Enter user name: tim32
 
 Enter root folder with music: D:\Music
