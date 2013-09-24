@@ -8,10 +8,12 @@ import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.audio.AudioFile;
+
 public class Scaner {
     public void scan_root(String root_dir, ArrayList<Song> song_list) throws IOException, Exception {
         String artist;
         String album;
+        int n = 0;
         FileFinder f = new FileFinder();
         boolean check_path = false;
         List dirs;
@@ -40,6 +42,7 @@ public class Scaner {
                 }  
             }
            check_path = false;
+           n++;
         }
     }
     

@@ -1,20 +1,13 @@
 package lastfmlove;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-class LastFmLove {
+
+public class LastFmLove {
+    public ArrayList<Song> song_list;
     
-    public static void main (String[] args) throws IOException, Exception
+    public void run(String user, String root, String limit) throws IOException, Exception
     {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter user name: ");
-        String user = scan.nextLine();
-        System.out.print("Enter root folder with music: ");
-        String root = scan.nextLine();
-        System.out.print("Enter limit playlist: ");
-        String limit = scan.nextLine();
         
-        ArrayList<Song> song_list;
         Downloader d = new Downloader();
         Scaner s = new Scaner();
         PlaylistCreator p = new PlaylistCreator();
